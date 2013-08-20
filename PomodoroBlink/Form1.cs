@@ -13,6 +13,27 @@ using Blink1Lib;
 
 namespace PomodoroBlink
 {
+
+    public static class ControlExtensions
+    {
+        /// <summary>
+        /// Executes the Action asynchronously on the UI thread, does not block execution on the calling thread.
+        /// </summary>
+        /// <param name="control"></param>
+        /// <param name="code"></param>
+        public static void UIThread(this Control @this, Action code)
+        {
+            if (@this.InvokeRequired)
+            {
+                @this.BeginInvoke(code);
+            }
+            else
+            {
+                code.Invoke();
+            }
+        }
+    }
+
     public partial class frmMain : Form
     {
         static System.Timers.Timer _timer;
@@ -21,23 +42,14 @@ namespace PomodoroBlink
         private int counter = 1;
         private int r = 255;
         private int b = 0;
-        private BackgroundWorker backgroundWorker1;
 
         public frmMain()
         {
             InitializeComponent();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.backgroundWorker1.WorkerReportsProgress = true;
-            this.backgroundWorker1.ProgressChanged +=
-                new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProcessChanged);
             blink1.open();
-            _timer = new System.Timers.Timer(100);
+            _timer = new System.Timers.Timer(6000);
+            //_timer = new System.Timers.Timer(100);
             _timer.Elapsed += new ElapsedEventHandler(_timer_Elapsed);
-        }
-
-        private void backgroundWorker1_ProcessChanged(object sender, ProgressChangedEventArgs e)
-        {
-            lblTimeLeft.Text = "foobarcar";
         }
 
         private void btnStartStopPomodoro_Click(object sender, EventArgs e)
@@ -57,7 +69,7 @@ namespace PomodoroBlink
             r = 255;
             b = 0;
             updateRGB();
-            this.btnStartStopPomodoro.Text = "Stop Pomodoro";
+            this.UIThread(() => this.btnStartStopPomodoro.Text = "Stop Pomodoro");
             counter = 1;
             timerEnabled = true;
             _timer.Enabled = true;
@@ -65,8 +77,9 @@ namespace PomodoroBlink
 
         private void disableTimer()
         {
-            this.btnStartStopPomodoro.Text = "Start Pomodoro";
-            this.lblTimeLeft.Text = "Time Left: 25m";
+            blink5x();
+            this.UIThread(() => this.btnStartStopPomodoro.Text = "Start Pomodoro");
+            this.UIThread(() => this.lblTimeLeft.Text = "Time Left: 25m");
             blink1.setRGB(0, 0, 0);
             timerEnabled = false;
             _timer.Enabled = false;
@@ -82,8 +95,7 @@ namespace PomodoroBlink
             for (int c = 0; c < 5; c++)
             {
                 blink1.fadeToRGB(500, 255, 0, 0);
-                System.Threading.Thread.Sleep(200);
-                blink1.fadeToRGB(500, 255, 0, 0);
+                blink1.fadeToRGB(500, 0, 0, 255);
             }
         }
 
@@ -94,11 +106,13 @@ namespace PomodoroBlink
                 r -= 1;
                 b += 1;
                 updateRGB();
-                backgroundWorker1.ReportProgress(1);
+                
+                this.UIThread(() => this.lblTimeLeft.Text = Math.Round(25.0 - (counter/10.0), 1).ToString() + " Minutes Remaining");
+                counter = counter + 1;
             }
             else
             {
-                disableTimer();
+                this.UIThread(disableTimer);
             }
                 
         }
