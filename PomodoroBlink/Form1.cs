@@ -69,7 +69,7 @@ namespace PomodoroBlink
             r = 255;
             b = 0;
             updateRGB();
-            this.UIThread(() => this.btnStartStopPomodoro.Text = "Stop Pomodoro");
+            this.UIThread(() => btnStartStopPomodoro.Text = "Stop Pomodoro");
             counter = 1;
             timerEnabled = true;
             _timer.Enabled = true;
@@ -78,8 +78,8 @@ namespace PomodoroBlink
         private void disableTimer()
         {
             blink5x();
-            this.UIThread(() => this.btnStartStopPomodoro.Text = "Start Pomodoro");
-            this.UIThread(() => this.lblTimeLeft.Text = "Time Left: 25m");
+            this.UIThread(() => btnStartStopPomodoro.Text = "Start Pomodoro");
+            this.UIThread(() => lblTimeLeft.Text = "Time Left: 25m");
             blink1.setRGB(0, 0, 0);
             timerEnabled = false;
             _timer.Enabled = false;
@@ -107,7 +107,7 @@ namespace PomodoroBlink
                 b += 1;
                 updateRGB();
                 
-                this.UIThread(() => this.lblTimeLeft.Text = Math.Round(25.0 - (counter/10.0), 1).ToString() + " Minutes Remaining");
+                this.UIThread(() => lblTimeLeft.Text = Math.Round(25.0 - (counter/10.0), 1).ToString() + " Minutes Remaining");
                 counter = counter + 1;
             }
             else
