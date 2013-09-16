@@ -107,7 +107,7 @@ namespace PomodoroBlink
                 b += 1;
                 updateRGB();
                 
-                this.UIThread(() => lblTimeLeft.Text = Math.Round(25.0 - (counter/10.0), 1).ToString() + " Minutes Remaining");
+                this.UIThread(() => lblTimeLeft.Text = Math.Round(25.0 - (counter/10.0), 1) + " M. Left");
                 counter = counter + 1;
             }
             else
