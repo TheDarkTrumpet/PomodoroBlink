@@ -54,7 +54,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="blink1-icon.ico" />
     <Content Include="blink1-lib.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

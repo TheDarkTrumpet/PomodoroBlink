@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.btnStartStopPomodoro = new System.Windows.Forms.Button();
             this.pgbTimeLeft = new System.Windows.Forms.ProgressBar();
             this.lblTimeLeft = new System.Windows.Forms.Label();
@@ -71,6 +72,7 @@
             this.Controls.Add(this.lblTimeLeft);
             this.Controls.Add(this.pgbTimeLeft);
             this.Controls.Add(this.btnStartStopPomodoro);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMain";
             this.Text = "Pomodoro Timer";
             this.ResumeLayout(false);
