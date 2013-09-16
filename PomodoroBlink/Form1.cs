@@ -13,27 +13,6 @@ using Blink1Lib;
 
 namespace PomodoroBlink
 {
-
-    public static class ControlExtensions
-    {
-        /// <summary>
-        /// Executes the Action asynchronously on the UI thread, does not block execution on the calling thread.
-        /// </summary>
-        /// <param name="control"></param>
-        /// <param name="code"></param>
-        public static void UIThread(this Control @this, Action code)
-        {
-            if (@this.InvokeRequired)
-            {
-                @this.BeginInvoke(code);
-            }
-            else
-            {
-                code.Invoke();
-            }
-        }
-    }
-
     public partial class frmMain : Form
     {
         static System.Timers.Timer _timer;
@@ -107,7 +86,8 @@ namespace PomodoroBlink
                 b += 1;
                 updateRGB();
                 
-                this.UIThread(() => lblTimeLeft.Text = Math.Round(25.0 - (counter/10.0), 1) + " M. Left");
+                this.UIThread(() => lblTimeLeft.Text = "Time Left: " + Math.Round(25.0 - (counter/10.0), 1) + "m");
+                this.UIThread(() => pgbTimeLeft.PerformStep());
                 counter = counter + 1;
             }
             else
@@ -115,6 +95,26 @@ namespace PomodoroBlink
                 this.UIThread(disableTimer);
             }
                 
+        }
+    }
+
+    public static class ControlExtensions
+    {
+        /// <summary>
+        /// Executes the Action asynchronously on the UI thread, does not block execution on the calling thread.
+        /// </summary>
+        /// <param name="control"></param>
+        /// <param name="code"></param>
+        public static void UIThread(this Control @this, Action code)
+        {
+            if (@this.InvokeRequired)
+            {
+                @this.BeginInvoke(code);
+            }
+            else
+            {
+                code.Invoke();
+            }
         }
     }
 }

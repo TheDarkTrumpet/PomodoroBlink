@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.btnStartStopPomodoro = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.pgbTimeLeft = new System.Windows.Forms.ProgressBar();
             this.lblTimeLeft = new System.Windows.Forms.Label();
             this.tmrTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
@@ -45,12 +45,14 @@
             this.btnStartStopPomodoro.UseVisualStyleBackColor = true;
             this.btnStartStopPomodoro.Click += new System.EventHandler(this.btnStartStopPomodoro_Click);
             // 
-            // progressBar1
+            // pgbTimeLeft
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 29);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(120, 23);
-            this.progressBar1.TabIndex = 1;
+            this.pgbTimeLeft.Location = new System.Drawing.Point(12, 29);
+            this.pgbTimeLeft.Maximum = 255;
+            this.pgbTimeLeft.Name = "pgbTimeLeft";
+            this.pgbTimeLeft.Size = new System.Drawing.Size(120, 23);
+            this.pgbTimeLeft.Step = 1;
+            this.pgbTimeLeft.TabIndex = 1;
             // 
             // lblTimeLeft
             // 
@@ -67,7 +69,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(262, 111);
             this.Controls.Add(this.lblTimeLeft);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.pgbTimeLeft);
             this.Controls.Add(this.btnStartStopPomodoro);
             this.Name = "frmMain";
             this.Text = "Pomodoro Timer";
@@ -79,7 +81,7 @@
         #endregion
 
         private System.Windows.Forms.Button btnStartStopPomodoro;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar pgbTimeLeft;
         private System.Windows.Forms.Label lblTimeLeft;
         private System.Windows.Forms.Timer tmrTimer;
     }
